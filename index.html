@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akrila - Family Trust & Events</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    :root {
+      --primary: #3a506b;
+      --secondary: #1c2541;
+      --accent: #5bc0be;
+      --light: #f5f5f5;
+      --dark: #0b132b;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      padding: 15px 0;
+      transition: all 0.3s ease;
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+      padding: 5px 0;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(58, 80, 107, 0.8), rgba(28, 37, 65, 0.9)), url('/api/placeholder/1200/800') center/cover;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: 2px solid var(--accent);
+    }
+
+    .btn:hover {
+      background-color: transparent;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Services Section */
+    .services {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .service-card {
+      padding: 40px 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .service-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* About Section */
+    .about {
+      padding: 100px 0;
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .about-img {
+      flex: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .about-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .about-img:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-text {
+      flex: 1;
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .about-text h2::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent);
+      bottom: -10px;
+      left: 0;
+    }
+
+    .about-text p {
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 50px 0 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-logo {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .footer-logo h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .footer-logo p {
+      line-height: 1.6;
+      color: #aaa;
+    }
+
+    .footer-links {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-links h4 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-links h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links ul li a {
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links ul li a:hover {
+      color: var(--accent);
+    }
+
+    .footer-contact {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .contact-info {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #aaa;
+    }
+
+    .contact-info i {
+      min-width: 20px;
+      color: var(--accent);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .about-content {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        height: 100vh;
+        width: 300px;
+        background-color: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+        z-index: 1001;
+      }
+
+      .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background-color: var(--primary);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+
+      .menu-toggle.active .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+
+      .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Akrila</a>
+      <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="nav-links" id="nav-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Akrila Family Trust</h1>
+      <p>Creating memorable events and securing your family's future. We bring elegance and trust together for generations to come.</p>
+      <a href="#contact" class="btn">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card" id="service-1">
+          <div class="service-icon">
+            <i>💼</i>
+          </div>
+          <h3>Family Trust</h3>
+          <p>We provide comprehensive family trust services to protect your assets and secure your family's financial future for generations.</p>
+        </div>
+        <div class="service-card" id="service-2">
+          <div class="service-icon">
+            <i>🎉</i>
+          </div>
+          <h3>Event Planning</h3>
+          <p>From intimate family gatherings to grand celebrations, we create unforgettable events tailored to your unique vision.</p>
+        </div>
+        <div class="service-card" id="service-3">
+          <div class="service-icon">
+            <i>📝</i>
+          </div>
+          <h3>Estate Planning</h3>
+          <p>Our expert consultants work with you to develop comprehensive estate plans that protect your legacy and provide for your loved ones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-img" id="about-img">
+          <img src="/api/placeholder/600/400" alt="Akrila Family">
+        </div>
+        <div class="about-text" id="about-text">
+          <h2>About Akrila</h2>
+          <p>Founded in 2010, Akrila is a premier family trust and event management company dedicated to preserving family legacies and creating memorable experiences.</p>
+          <p>Our team of experienced professionals work closely with families to understand their unique needs and aspirations, providing tailored solutions that ensure financial security and celebrate important milestones.</p>
+          <p>With a commitment to excellence and integrity, we have helped hundreds of families secure their futures while creating moments they'll cherish forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="contact-form" id="contact-form">
+        <form id="form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h3>Akrila</h3>
+          <p>Creating lasting legacies and memorable moments for families since 2010.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact Us</h4>
+          <div class="contact-info">
+            <i>📍</i>
+            <span>123 Trust Avenue, Suite 100<br>New York, NY 10001</span>
+          </div>
+          <div class="contact-info">
+            <i>📞</i>
+            <span>+1 (555) 123-4567</span>
+          </div>
+          <div class="contact-info">
+            <i>✉️</i>
+            <span>info@akrila.com</span>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Akrila Family Trust. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        window.scrollTo({
+          top: targetSection.offsetTop - 70,
+          behavior: 'smooth'
+        });
+        
+        // Close mobile menu if open
+        if (document.getElementById('nav-links').classList.contains('active')) {
+          document.getElementById('mobile-menu').click();
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    
+    mobileMenu.addEventListener('click', function() {
+      this.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        
+        // Add animation based on element
+        if (entry.target.id.startsWith('service')) {
+          entry.target.style.animation = `fadeUp 0.6s ease forwards ${entry.target.id.split('-')[1] * 0.2}s`;
+        } else if (entry.target.id === 'about-img') {
+          entry.target.style.animation = 'fadeLeft 0.8s ease forwards';
+        } else if (entry.target.id === 'about-text') {
+          entry.target.style.animation = 'fadeRight 0.8s ease forwards';
+        } else if (entry.target.id === 'contact-form') {
+          entry.target.style.animation = 'fadeUp 0.8s ease forwards';
+        }
+        
+        observer.unobserve(entry.target);
+      });
+    }, observerOptions);
+
+    // Observe elements for animation
+    document.querySelectorAll('.service-card, #about-img, #about-text, #contact-form').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Form submission handler
+    document.getElementById('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // In a real implementation, you would send this data to a server
+      // For demo purposes, just show an alert
+      alert(`Thank you ${name}! Your message has been received. We'll contact you shortly.`);
+      
+      // Reset form
+      this.reset();
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+      const scroll = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      hero.style.backgroundPosition = `center ${scroll * 0.5}px`;
+      
+      // Shrink navbar on scroll
+      const nav = document.querySelector('nav');
+      if (scroll > 50) {
+        nav.style.padding = '10px 0';
+      } else {
+        nav.style.padding = '15px 0';
+      }
+    });
+  </script>
+</body>
+</html>
