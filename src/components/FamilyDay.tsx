@@ -40,7 +40,7 @@ const FamilyDay = () => {
     <section id="family-day" className="py-20 bg-[#F5F2EA]">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-serif text-[#2C5530] text-center mb-16 fade-in">
-          Family Day Celebration
+          Family Day 2025
         </h2>
         
         <div className="grid md:grid-cols-3 gap-8">
